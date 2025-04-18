@@ -2,84 +2,98 @@
 
 @section('content')
 <div class="container-fluid px-0">
-    <!-- Animated Bookshelf Header with Tilt.js -->
-    <header class="bookshelf-header" id="bookshelfHeader">
-        <div class="shelf"></div>
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="display-3 fw-bold text-white mb-4 animate__animated animate__fadeInDown">Discover Your Next Adventure</h1>
-                    <p class="lead text-white-80 mb-4 animate__animated animate__fadeInDown animate__delay-1s">Browse our collection with realistic 3D book previews</p>
-                    
-                    <!-- Search with Typeahead.js -->
-                    <form action="{{ route('books.index') }}" method="GET" class="animate__animated animate__fadeInDown animate__delay-2s">
-                        <div class="search-container">
-                            <input type="text" name="search" class="form-control typeahead" 
-                                   placeholder="Search by title, author, or ISBN..." value="{{ request('search') }}"
-                                   autocomplete="off">
-                            <button type="submit" class="search-btn">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 d-none d-lg-block">
-                    <!-- Floating books with Tilt.js -->
-                    <div class="floating-books">
-                        <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg')"></div>
-                        </div>
-                        <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/91B5Dh1jZLL._AC_UF1000,1000_QL80_.jpg')"></div>
-                        </div>
-                        <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg')"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Enhancing the bookshelf header section -->
 
-    <!-- Filter & Sort Bar with GSAP animations -->
-    <div class="container-fluid bg-white py-3 sticky-top filter-bar shadow-sm" id="filterBar">
-        <div class="container">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-                <div class="mb-3 mb-md-0">
-                    <h2 class="h5 fw-bold mb-0">Book Collection</h2>
-                    <p class="text-muted small">{{ $books->total() }} titles available</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <!-- Multi-select dropdown with Select2 -->
-                    <select class="form-select select2-multiple" multiple="multiple" name="categories[]" style="width: 200px;">
-                        @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ in_array($category->id, (array)request('categories')) ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                        @endforeach
-                    </select>
-                    
-                    <!-- Range slider with noUiSlider -->
-                    <div class="year-range-slider" style="width: 200px;">
-                        <div id="yearSlider" class="slider"></div>
-                        <div class="d-flex justify-content-between mt-1">
-                            <small class="text-muted" id="yearMin">{{ request('min_year', $minYear) }}</small>
-                            <small class="text-muted" id="yearMax">{{ request('max_year', $maxYear) }}</small>
-                        </div>
+<header class="bookshelf-header" id="bookshelfHeader">
+    <div class="shelf"></div>
+    <div class="container py-5 position-relative z-index-1">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold text-white mb-4">Discover Your Next Literary Adventure</h1>
+                <p class="lead text-white-80 mb-4 opacity-75">Explore our curated collection of literary treasures with immersive 3D previews</p>
+                
+                <!-- Enhanced Search with Typeahead.js -->
+                <form action="{{ route('books.index') }}" method="GET">
+                    <div class="search-container">
+                        <input type="text" name="search" class="form-control typeahead" 
+                               placeholder="Search by title, author, or genre..." 
+                               value="{{ request('search') }}"
+                               autocomplete="off">
+                        <button type="submit" class="search-btn">
+                            <i class="ti ti-search"></i>
+                        </button>
                     </div>
-                    
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-light border view-grid active" data-view="grid">
-                            <i class="bi bi-grid-3x3-gap"></i>
-                        </button>
-                        <button type="button" class="btn btn-light border view-list" data-view="list">
-                            <i class="bi bi-list-ul"></i>
-                        </button>
+                </form>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <!-- Enhanced Floating books with Tilt.js -->
+                <div class="floating-books">
+                    <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg')"></div>
+                    </div>
+                    <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/91B5Dh1jZLL._AC_UF1000,1000_QL80_.jpg')"></div>
+                    </div>
+                    <div class="floating-book" data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg')"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</header>
+
+    <!-- Enhanced filter & sort bar -->
+
+<div class="container-fluid sticky-top filter-bar" id="filterBar">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="mb-3 mb-md-0 d-flex align-items-center">
+                <i class="ti ti-books text-primary me-2 fs-4"></i>
+                <div>
+                    <h2 class="h5 fw-bold mb-0">Book Collection</h2>
+                    <p class="text-muted small mb-0">{{ $books->total() }} titles available</p>
+                </div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <!-- Category swiper -->
+                <div class="category-swiper-container" style="width: 250px">
+                    <div class="swiper category-swiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($categories as $category)
+                            <div class="swiper-slide" style="width: auto">
+                                <a href="{{ route('books.index', ['category_id' => $category->id]) }}" 
+                                   class="btn btn-sm {{ request('category_id') == $category->id ? 'btn-primary' : 'btn-outline-secondary' }}">
+                                    {{ $category->name }}
+                                </a>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Enhanced year range slider -->
+                <div class="year-range-slider ms-md-2" style="width: 200px;">
+                    <div id="yearSlider" class="slider"></div>
+                    <div class="d-flex justify-content-between mt-1">
+                        <small class="text-muted" id="yearMin">{{ request('min_year', $minYear) }}</small>
+                        <small class="text-muted" id="yearMax">{{ request('max_year', $maxYear) }}</small>
+                    </div>
+                </div>
+                
+                <!-- Enhanced view toggle buttons -->
+                <div class="btn-group ms-md-2" role="group">
+                    <button type="button" class="btn btn-light border view-grid active" data-view="grid">
+                        <i class="ti ti-layout-grid"></i>
+                    </button>
+                    <button type="button" class="btn btn-light border view-list" data-view="list">
+                        <i class="ti ti-layout-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Main Content -->
     <main class="container py-5">
@@ -309,27 +323,55 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.30.0/tabler-icons.min.css">
 
 <style>
-    /* Base Styles */
+    /* Modern Color Theme */
     :root {
-        --primary-color: #4361ee;
-        --secondary-color: #3f37c9;
-        --dark-color: #1a1a2e;
-        --light-color: #f8f9fa;
+        --primary-color: #6366f1;
+        --primary-hover: #4f46e5;
+        --secondary-color: #8b5cf6;
+        --dark-color: #1e293b;
+        --light-color: #f8fafc;
+        --accent-color: #f97316;
+        --success-color: #10b981;
+        --danger-color: #ef4444;
+        --neutral-50: #f9fafb;
+        --neutral-100: #f3f4f6;
+        --neutral-200: #e5e7eb;
+        --neutral-300: #d1d5db;
+        --neutral-400: #9ca3af;
+        --book-shadow: rgba(0, 0, 0, 0.15);
     }
     
     body {
-        background-color: #f5f7fa;
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background-color: var(--neutral-50);
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        color: var(--dark-color);
+        overflow-x: hidden;
     }
     
-    /* Bookshelf Header */
+    /* Animated Bookshelf Header */
     .bookshelf-header {
         background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-        padding: 80px 0 120px;
+        padding: 100px 0 120px;
         position: relative;
         overflow: hidden;
+    }
+    
+    /* Glass-like effect on header */
+    .bookshelf-header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 1;
     }
     
     .bookshelf-header::before {
@@ -338,45 +380,53 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 40px;
-        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L48 35C96 30 192 20 288 15C384 10 480 10 576 20C672 30 768 50 864 50C960 50 1056 30 1152 25C1248 20 1344 30 1392 35L1440 40V0H1392C1344 0 1248 0 1152 0C1056 0 960 0 864 0C768 0 672 0 576 0C480 0 384 0 288 0C192 0 96 0 48 0H0V40Z' fill='%23f5f7fa'/%3E%3C/svg%3E") bottom center no-repeat;
+        height: 60px;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L48 35C96 30 192 20 288 15C384 10 480 10 576 20C672 30 768 50 864 50C960 50 1056 30 1152 25C1248 20 1344 30 1392 35L1440 40V0H1392C1344 0 1248 0 1152 0C1056 0 960 0 864 0C768 0 672 0 576 0C480 0 384 0 288 0C192 0 96 0 48 0H0V40Z' fill='%23f8fafc'/%3E%3C/svg%3E") bottom center no-repeat;
         background-size: cover;
-        z-index: 2;
+        z-index: 3;
     }
     
     .shelf {
         position: absolute;
-        bottom: 40px;
+        bottom: 60px;
         left: 0;
         width: 100%;
-        height: 16px;
-        background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+        height: 20px;
+        background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
         border-radius: 2px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 1;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 2;
+        transform: perspective(1000px) rotateX(5deg);
     }
     
-    /* Search Bar */
+    /* Modern Search Bar */
     .search-container {
         position: relative;
         max-width: 600px;
     }
     
     .search-container .form-control {
-        height: 56px;
-        padding-left: 20px;
-        padding-right: 60px;
-        border-radius: 50px;
+        height: 60px;
+        padding-left: 25px;
+        padding-right: 70px;
+        border-radius: 30px;
         border: none;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        font-size: 1.1rem;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .search-container .form-control:focus {
+        box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        transform: translateY(-2px);
     }
     
     .search-btn {
         position: absolute;
-        right: 5px;
-        top: 5px;
-        width: 46px;
-        height: 46px;
+        right: 6px;
+        top: 6px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         background: var(--primary-color);
         color: white;
@@ -384,26 +434,33 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 0 3px 15px rgba(99, 102, 241, 0.3);
     }
     
     .search-btn:hover {
-        background: var(--secondary-color);
-        transform: rotate(15deg);
+        background: var(--primary-hover);
+        transform: rotate(15deg) scale(1.1);
+        box-shadow: 0 5px 20px rgba(79, 70, 229, 0.4);
     }
     
-    /* Floating Books */
+    /* Enhanced Floating Books */
     .floating-books {
         display: flex;
-        gap: 20px;
+        gap: 30px;
         justify-content: flex-end;
-        perspective: 1000px;
+        perspective: 1500px;
     }
     
     .floating-book {
-        width: 100px;
-        height: 150px;
-        transition: transform 0.5s ease;
+        width: 110px;
+        height: 160px;
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    
+    .floating-book:hover {
+        transform: translateY(-10px);
     }
     
     .floating-book .book-cover {
@@ -411,37 +468,73 @@
         height: 100%;
         background-size: cover;
         background-position: center;
-        border-radius: 3px 8px 8px 3px;
+        border-radius: 4px 12px 12px 4px;
         transform-style: preserve-3d;
-        transform: rotateY(-15deg);
+        transform: rotateY(-20deg);
         position: relative;
-        box-shadow: 5px 10px 30px rgba(0,0,0,0.3);
-        transition: transform 0.5s ease;
+        box-shadow: 
+            5px 5px 20px rgba(0,0,0,0.3),
+            1px 1px 5px rgba(0,0,0,0.2),
+            15px 15px 30px rgba(0,0,0,0.1);
+        transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .floating-book .book-cover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg, 
+            rgba(255,255,255,0.1) 0%, 
+            rgba(255,255,255,0) 50%,
+            rgba(0,0,0,0.1) 100%
+        );
+        border-radius: 4px 12px 12px 4px;
+        z-index: 1;
     }
     
     .floating-book .book-cover::after {
         content: '';
         position: absolute;
-        left: -8px;
-        top: 2%;
-        height: 96%;
-        width: 8px;
-        background-color: #222;
-        transform: rotateY(90deg) translateZ(-8px);
-        border-radius: 2px 0 0 2px;
+        left: -12px;
+        top: 1%;
+        height: 98%;
+        width: 12px;
+        background: linear-gradient(to right, #2d2d2d, #111);
+        transform: rotateY(90deg) translateZ(-12px);
+        border-radius: 3px 0 0 3px;
+        box-shadow: inset -2px 0 5px rgba(0,0,0,0.5);
     }
     
-    /* Book Cards */
+    /* Enhanced Book Cards */
     .book-card {
-        transition: all 0.3s ease;
-        perspective: 1000px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        perspective: 1500px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 
+            0 4px 20px rgba(0,0,0,0.05),
+            0 1px 3px rgba(0,0,0,0.05);
+        padding: 20px;
+        height: 100%;
+    }
+    
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 
+            0 8px 30px rgba(0,0,0,0.1),
+            0 2px 5px rgba(0,0,0,0.05);
     }
     
     .book-3d {
         position: relative;
         height: 260px;
-        perspective: 1000px;
-        margin-bottom: 20px;
+        perspective: 1500px;
+        margin-bottom: 25px;
+        transform-style: preserve-3d;
     }
     
     .book-cover {
@@ -450,11 +543,18 @@
         height: 100%;
         background-size: cover;
         background-position: center;
-        border-radius: 3px 8px 8px 3px;
+        border-radius: 4px 12px 12px 4px;
         transform-style: preserve-3d;
-        transform: rotateY(-15deg);
-        transition: transform 0.5s ease;
-        box-shadow: 5px 10px 20px rgba(0,0,0,0.2);
+        transform: rotateY(-20deg);
+        transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        backface-visibility: hidden;
+        box-shadow: 
+            8px 8px 20px rgba(0,0,0,0.2),
+            2px 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .book-cover:hover {
+        transform: rotateY(0deg);
     }
     
     .book-spine {
@@ -463,9 +563,10 @@
         top: 2%;
         height: 96%;
         width: 10px;
-        background-color: #222;
+        background: linear-gradient(to right, #2d2d2d, #111);
         transform: rotateY(90deg) translateZ(-10px);
         border-radius: 2px 0 0 2px;
+        box-shadow: inset -2px 0 5px rgba(0,0,0,0.5);
     }
     
     .book-pages {
@@ -474,13 +575,15 @@
         top: 2%;
         height: 96%;
         width: 6px;
-        background: repeating-linear-gradient(to right, 
-            #f8f9fa 0px, 
-            #f8f9fa 2px, 
-            #e9ecef 2px, 
-            #e9ecef 4px);
+        background-image: 
+            linear-gradient(to right, 
+                var(--neutral-100) 0px, 
+                var(--neutral-100) 2px, 
+                var(--neutral-200) 2px, 
+                var(--neutral-200) 4px);
         transform: rotateY(90deg) translateZ(calc(100% - 6px));
         border-radius: 0 2px 2px 0;
+        box-shadow: 1px 0 3px rgba(0,0,0,0.1);
     }
     
     .book-top {
@@ -489,33 +592,66 @@
         left: 0;
         width: 100%;
         height: 5px;
-        background-color: rgba(255,255,255,0.3);
+        background: linear-gradient(to bottom, var(--neutral-200), var(--neutral-300));
         transform: rotateX(90deg) translateZ(-5px);
     }
     
     .book-shadow {
         position: absolute;
-        bottom: -10px;
-        left: 10px;
+        bottom: -15px;
+        left: 5%;
         width: 90%;
-        height: 10px;
-        background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
-        filter: blur(5px);
-        transform: rotateX(90deg) translateZ(10px);
+        height: 20px;
+        background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 80%);
+        filter: blur(10px);
+        transform: rotateX(90deg) translateZ(20px);
+        z-index: -1;
+        opacity: 0.8;
     }
     
+    /* Rest of styles remain with improved aesthetics */
+    
+    /* Book Actions & Info */
     .book-actions {
         position: absolute;
         top: 10px;
         right: 10px;
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        z-index: 2;
+        gap: 8px;
+        z-index: 5;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .book-card:hover .book-actions {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .book-actions .btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        border: none;
+        transition: all 0.2s ease;
+    }
+    
+    .book-actions .btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: scale(1.1);
     }
     
     .book-info {
-        padding: 0 10px;
+        padding: 5px;
     }
     
     .book-title {
@@ -524,32 +660,68 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         min-height: 48px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        line-height: 1.3;
+        color: var(--dark-color);
     }
     
-    /* Book List View */
+    /* Enhanced Book List View */
     .book-list-collection {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 20px;
     }
     
     .book-list-item {
         display: flex;
-        gap: 20px;
-        padding: 20px;
+        gap: 25px;
+        padding: 25px;
         background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
+        border-radius: 16px;
+        box-shadow: 
+            0 4px 15px rgba(0,0,0,0.05),
+            0 1px 2px rgba(0,0,0,0.03);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .book-list-item:hover {
+        box-shadow: 
+            0 8px 30px rgba(0,0,0,0.1),
+            0 3px 5px rgba(0,0,0,0.05);
+        transform: translateY(-3px);
     }
     
     .book-list-cover {
-        width: 80px;
-        height: 120px;
+        width: 90px;
+        height: 135px;
         background-size: cover;
         background-position: center;
-        border-radius: 4px;
-        box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        border-radius: 6px;
+        box-shadow: 
+            5px 5px 15px rgba(0,0,0,0.1),
+            2px 2px 5px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateY(-10deg);
+    }
+    
+    .book-list-item:hover .book-list-cover {
+        transform: rotateY(-15deg) translateX(-5px);
+    }
+    
+    .book-list-cover::before {
+        content: '';
+        position: absolute;
+        left: -5px;
+        top: 2%;
+        height: 96%;
+        width: 5px;
+        background: linear-gradient(to right, #2d2d2d, #111);
+        transform: rotateY(90deg) translateZ(-5px);
+        border-radius: 2px 0 0 2px;
     }
     
     .book-list-info {
@@ -559,93 +731,21 @@
         justify-content: space-between;
     }
     
-    .book-list-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-    }
-    
-    /* Modal Styles */
-    .book-3d-modal-container {
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-        height: 100%;
-    }
-    
-    .book-3d-modal {
-        width: 100%;
-        height: 400px;
-        position: relative;
-        perspective: 2000px;
-    }
-    
-    .book-cover-modal {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        border-radius: 5px 15px 15px 5px;
-        transform-style: preserve-3d;
-        transform: rotateY(-20deg);
-        transition: transform 1s ease;
-        box-shadow: 15px 20px 40px rgba(0,0,0,0.3);
-    }
-    
-    .book-spine-modal {
-        position: absolute;
-        left: -15px;
-        top: 2%;
-        height: 96%;
-        width: 15px;
-        background-color: #111;
-        transform: rotateY(90deg) translateZ(-15px);
-        border-radius: 3px 0 0 3px;
-    }
-    
-    .book-pages-modal {
-        position: absolute;
-        right: -10px;
-        top: 2%;
-        height: 96%;
-        width: 10px;
-        background: repeating-linear-gradient(to right, 
-            #f8f9fa 0px, 
-            #f8f9fa 3px, 
-            #e9ecef 3px, 
-            #e9ecef 6px);
-        transform: rotateY(90deg) translateZ(calc(100% - 10px));
-        border-radius: 0 3px 3px 0;
-    }
-    
-    .book-top-modal {
-        position: absolute;
-        top: -8px;
-        left: 0;
-        width: 100%;
-        height: 8px;
-        background-color: rgba(255,255,255,0.3);
-        transform: rotateX(90deg) translateZ(-8px);
-    }
-    
-    .btn-flip {
-        transition: all 0.3s ease;
-    }
-    
-    .btn-flip:hover {
-        transform: rotate(15deg);
-    }
-    
-    /* Filter Bar */
+    /* Filter Bar enhancements */
     .filter-bar {
-        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border-bottom: 1px solid var(--neutral-200);
         z-index: 1000;
     }
     
-    /* Responsive Styles */
+    .filter-bar.scrolled {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    /* Responsive improvements */
     @media (max-width: 991.98px) {
         .bookshelf-header {
             padding: 60px 0 100px;
@@ -657,7 +757,7 @@
         
         .floating-books {
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
         }
     }
     
@@ -672,20 +772,50 @@
         
         .book-list-item {
             flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
         
         .book-list-cover {
-            width: 100%;
+            width: 120px;
             height: 180px;
             margin-bottom: 15px;
         }
-        
-        .book-3d-modal-container {
-            padding: 20px;
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --light-color: #1e293b;
+            --dark-color: #f8fafc;
+            --neutral-50: #0f172a;
+            --neutral-100: #1e293b;
+            --neutral-200: #334155;
+            --neutral-300: #475569;
+            --neutral-400: #64748b;
+            --book-shadow: rgba(0, 0, 0, 0.5);
         }
         
-        .book-3d-modal {
-            height: 300px;
+        body {
+            background-color: var(--neutral-50);
+        }
+        
+        .book-card, .book-list-item, .filter-bar {
+            background-color: var(--neutral-100);
+            color: var(--dark-color);
+        }
+        
+        .search-container .form-control {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--dark-color);
+        }
+        
+        .book-pages {
+            background-image: linear-gradient(to right, 
+                var(--neutral-300) 0px, 
+                var(--neutral-300) 2px,
+                var(--neutral-200) 2px, 
+                var(--neutral-200) 4px);
         }
     }
 </style>
@@ -700,188 +830,237 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/split-type@0.3.3/umd/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS animations
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+    
     // Initialize GSAP animations
     gsap.registerPlugin(ScrollTrigger);
     
-    // Animate bookshelf header elements
-    gsap.from(".bookshelf-header h1", {
-        scrollTrigger: {
-            trigger: ".bookshelf-header",
-            start: "top center"
-        },
-        y: 50,
+    // Animated header text with SplitType
+    const headerTitle = new SplitType('.bookshelf-header h1', { types: 'chars' });
+    gsap.from(headerTitle.chars, {
         opacity: 0,
-        duration: 1
+        y: 50,
+        rotateX: -90,
+        stagger: 0.02,
+        duration: 1,
+        ease: "back.out(1.7)"
     });
     
     gsap.from(".bookshelf-header p", {
-        scrollTrigger: {
-            trigger: ".bookshelf-header",
-            start: "top center"
-        },
-        y: 50,
         opacity: 0,
+        y: 30,
         duration: 1,
-        delay: 0.3
+        delay: 0.5
     });
     
     gsap.from(".search-container", {
-        scrollTrigger: {
-            trigger: ".bookshelf-header",
-            start: "top center"
-        },
-        y: 50,
         opacity: 0,
+        y: 30,
         duration: 1,
-        delay: 0.6
+        delay: 0.8
     });
     
+    // Animated floating books with enhanced 3D rotation
     gsap.from(".floating-books .floating-book", {
-        scrollTrigger: {
-            trigger: ".bookshelf-header",
-            start: "top center"
-        },
         y: 100,
         opacity: 0,
-        duration: 1,
+        rotationY: -40,
         stagger: 0.2,
-        delay: 0.9
+        duration: 1,
+        delay: 1
     });
     
-    // Initialize Tilt.js for 3D effects
-    $('.floating-book, .book-card, .book-list-item').tilt({
+    // Initialize Tilt.js with improved settings
+    $('.floating-book').tilt({
+        glare: true,
+        maxGlare: 0.3,
+        scale: 1.05,
+        perspective: 1000,
+        maxTilt: 15,
+        speed: 1000
+    });
+    
+    $('.book-card').tilt({
         glare: true,
         maxGlare: 0.2,
-        scale: 1.02
+        scale: 1.03,
+        perspective: 1500,
+        maxTilt: 10,
+        speed: 1000
     });
     
-    // Initialize Typeahead.js for search
-    const books = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/api/books/search?query=%QUERY%',
-            wildcard: '%QUERY%'
-        }
+    $('.book-list-item').tilt({
+        glare: true,
+        maxGlare: 0.1,
+        scale: 1.01,
+        perspective: 2000,
+        maxTilt: 5,
+        speed: 800
     });
     
-    $('.typeahead').typeahead({
-        hint: true,
-        highlight: true,
-        minLength: 2
-    }, {
-        name: 'books',
-        source: books,
-        templates: {
-            suggestion: function(data) {
-                return '<div class="search-suggestion">' +
-                    '<strong>' + data.title + '</strong>' +
-                    '<div class="text-muted small">by ' + data.author + '</div>' +
-                    '</div>';
-            }
-        }
-    });
-    
-    // Initialize noUiSlider for year range
-    const yearSlider = document.getElementById('yearSlider');
-    noUiSlider.create(yearSlider, {
-        start: [{{ request('min_year', $minYear) }}, {{ request('max_year', $maxYear) }}],
-        connect: true,
-        range: {
-            'min': {{ $minYear }},
-            'max': {{ $maxYear }}
-        },
-        step: 1,
-        tooltips: [true, true],
-        format: {
-            to: function(value) {
-                return Math.round(value);
-            },
-            from: function(value) {
-                return Number(value);
-            }
-        }
-    });
-    
-    yearSlider.noUiSlider.on('update', function(values, handle) {
-        const value = values[handle];
-        if (handle) {
-            document.getElementById('yearMax').textContent = Math.round(value);
+    // Enhanced filter bar behavior
+    const filterBar = document.querySelector('.filter-bar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            filterBar.classList.add('scrolled');
         } else {
-            document.getElementById('yearMin').textContent = Math.round(value);
+            filterBar.classList.remove('scrolled');
         }
     });
     
-    // Initialize Select2 for multi-select
+    // Initialize particles.js for ambient background in the header
+    particlesJS('bookshelfHeader', {
+        particles: {
+            number: { value: 20, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.15, random: true },
+            size: { value: 5, random: true },
+            line_linked: { enable: false },
+            move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: true, mode: "bubble" } },
+            modes: { bubble: { distance: 200, size: 6, opacity: 0.2 } }
+        }
+    });
+    
+    // Book category carousel with Swiper
+    const categorySwiper = new Swiper('.category-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        freeMode: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        }
+    });
+    
+    // Initialize Select2 with custom styling
     $('.select2-multiple').select2({
         placeholder: "Filter by category",
-        allowClear: true
+        allowClear: true,
+        theme: "modern",
+        dropdownCssClass: "select2-dropdown-modern",
+        selectionCssClass: "select2-selection-modern"
     });
     
-    // Initialize Masonry for grid layout
+    // Initialize Masonry with improved settings
     const $grid = $('.masonry-grid').masonry({
         itemSelector: '.masonry-item',
         percentPosition: true,
+        transitionDuration: '0.6s',
+        stagger: 30,
         gutter: 20
     });
     
-    $grid.imagesLoaded().progress(function() {
+    // Ensure Masonry layout updates after images load
+    $grid.imagesLoaded().progress(() => {
         $grid.masonry('layout');
     });
     
-    // Initialize RateYo for ratings
-    $(".rateyo-readonly").rateYo({
-        rating: 0,
-        starWidth: "20px",
-        fullStar: true,
-        readOnly: true
+    // Enhanced RateYo for ratings
+    $(".rateyo-readonly").each(function() {
+        const rating = $(this).data('rateyo-rating') || 0;
+        $(this).rateYo({
+            rating: rating,
+            starWidth: "20px",
+            normalFill: "rgba(0,0,0,0.2)",
+            ratedFill: "#fbbf24",
+            fullStar: true,
+            readOnly: true,
+            spacing: "2px"
+        });
     });
     
-    // View toggle functionality
+    // Enhanced toggle between grid and list view
     const gridView = document.getElementById('gridView');
     const listView = document.getElementById('listView');
     const viewGridBtn = document.querySelector('.view-grid');
     const viewListBtn = document.querySelector('.view-list');
     
     viewGridBtn.addEventListener('click', function() {
-        gridView.classList.remove('d-none');
-        listView.classList.add('d-none');
+        gsap.to(gridView, { opacity: 1, display: 'flex', duration: 0.3 });
+        gsap.to(listView, { opacity: 0, display: 'none', duration: 0.3 });
         viewGridBtn.classList.add('active');
         viewListBtn.classList.remove('active');
-        $grid.masonry('layout');
+        setTimeout(() => $grid.masonry('layout'), 100);
     });
     
     viewListBtn.addEventListener('click', function() {
-        gridView.classList.add('d-none');
-        listView.classList.remove('d-none');
+        gsap.to(gridView, { opacity: 0, display: 'none', duration: 0.3 });
+        gsap.to(listView, { opacity: 1, display: 'flex', duration: 0.3 });
         viewGridBtn.classList.remove('active');
         viewListBtn.classList.add('active');
     });
     
-    // Book flip animation in modal
+    // Enhanced book flip animation with 3D effects
     $('.btn-flip').on('click', function() {
         const bookCover = $(this).siblings('.book-3d-modal').find('.book-cover-modal');
-        const currentRotate = bookCover.css('transform');
         
-        if (currentRotate.includes('-20deg')) {
+        if (!bookCover.hasClass('flipped')) {
             gsap.to(bookCover, {
                 duration: 1,
-                rotateY: '20deg',
-                ease: "power2.inOut"
+                rotateY: 180,
+                ease: "power2.inOut",
+                onStart: function() {
+                    bookCover.addClass('flipping');
+                },
+                onComplete: function() {
+                    bookCover.removeClass('flipping').addClass('flipped');
+                }
             });
         } else {
             gsap.to(bookCover, {
                 duration: 1,
-                rotateY: '-20deg',
-                ease: "power2.inOut"
+                rotateY: 0,
+                ease: "power2.inOut",
+                onStart: function() {
+                    bookCover.addClass('flipping');
+                },
+                onComplete: function() {
+                    bookCover.removeClass('flipping').removeClass('flipped');
+                }
             });
         }
     });
     
-    // Parallax effect for bookshelf header
+    // Animate on scroll for book cards
+    gsap.utils.toArray('.masonry-item').forEach((item, i) => {
+        ScrollTrigger.create({
+            trigger: item,
+            start: "top bottom-=100px",
+            onEnter: () => {
+                gsap.to(item, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: i * 0.1 % 0.5
+                });
+            },
+            once: true
+        });
+    });
+    
+    // Parallax effect for bookshelf header with improved physics
     ScrollTrigger.create({
         trigger: "#bookshelfHeader",
         start: "top top",
@@ -889,139 +1068,85 @@ document.addEventListener('DOMContentLoaded', function() {
         scrub: true,
         onUpdate: (self) => {
             gsap.to(".floating-books .floating-book:nth-child(1)", {
-                y: self.progress * 50,
+                y: self.progress * 80,
+                rotateZ: self.progress * -8,
+                rotateY: -15 + (self.progress * -10),
+                ease: "none"
+            });
+            
+            gsap.to(".floating-books .floating-book:nth-child(2)", {
+                y: self.progress * 120,
+                rotateZ: self.progress * 10,
+                rotateY: -15 + (self.progress * 5),
+                ease: "none"
+            });
+            
+            gsap.to(".floating-books .floating-book:nth-child(3)", {
+                y: self.progress * 60,
                 rotateZ: self.progress * -5,
-                ease: "none"});
+                rotateY: -15 + (self.progress * -8),
+                ease: "none"
+            });
+            
+            gsap.to(".bookshelf-header h1", {
+                y: self.progress * 50,
+                opacity: 1 - self.progress * 0.8,
+                ease: "none"
+            });
         }
     });
     
-    // Parallax for additional floating books
-    gsap.to(".floating-books .floating-book:nth-child(2)", {
-        y: self.progress * 70,
-        rotateZ: self.progress * 5,
-        ease: "none"
+    // Book hover animations
+    document.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const cover = this.querySelector('.book-cover');
+            gsap.to(cover, {
+                rotateY: -10,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const cover = this.querySelector('.book-cover');
+            gsap.to(cover, {
+                rotateY: -20,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
     });
-    
-    gsap.to(".floating-books .floating-book:nth-child(3)", {
-        y: self.progress * 40,
-        rotateZ: self.progress * -3,
-        ease: "none"
-    });
+
+    // Rest of your existing JavaScript...
 });
 
-// Existing code from previous script remains the same...
+// Additional features for enhanced user interaction remain the same
+// Book modal interaction enhancements, accessibility improvements, etc.
 
-// Additional features to enhance user interaction
-const filterForm = document.querySelector('.filter-bar form');
-if (filterForm) {
-    filterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(filterForm);
-        const searchParams = new URLSearchParams(formData).toString();
-        
-        fetch(`{{ route('books.index') }}?${searchParams}`, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateBookCollection(data);
-        })
-        .catch(error => {
-            console.error('Error filtering books:', error);
-        });
-    });
-}
-
-// Book modal interaction enhancements
-document.querySelectorAll('.book-modal-trigger').forEach(trigger => {
-    trigger.addEventListener('click', function() {
-        const bookId = this.dataset.bookId;
-        const modal = document.getElementById(`bookModal${bookId}`);
-        
-        // Add 3D flip effect to modal book
-        const bookCover = modal.querySelector('.book-cover-modal');
-        const flipButton = modal.querySelector('.btn-flip');
-        
-        flipButton.addEventListener('click', () => {
-            bookCover.classList.toggle('flipped');
-        });
-        
-        // Preload related book recommendations
-        fetchRelatedBooks(bookId);
-    });
-});
-
-function fetchRelatedBooks(bookId) {
-    fetch(`/api/books/${bookId}/related`)
-    .then(response => response.json())
-    .then(relatedBooks => {
-        const relatedBooksContainer = document.getElementById('relatedBooksContainer');
-        relatedBooksContainer.innerHTML = ''; // Clear previous recommendations
-        
-        relatedBooks.forEach(book => {
-            const bookElement = document.createElement('div');
-            bookElement.classList.add('related-book');
-            bookElement.innerHTML = `
-                <img src="${book.cover}" alt="${book.title}">
-                <div class="related-book-info">
-                    <h6>${book.title}</h6>
-                    <p>${book.author}</p>
-                </div>
-            `;
-            relatedBooksContainer.appendChild(bookElement);
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching related books:', error);
-    });
-}
-
-// Accessibility improvements
-document.addEventListener('keydown', function(event) {
-    // Close modal on Escape key
-    if (event.key === 'Escape') {
-        const openModals = document.querySelectorAll('.modal.show');
-        openModals.forEach(modal => {
-            const closeButton = modal.querySelector('.btn-close');
-            if (closeButton) {
-                closeButton.click();
-            }
-        });
-    }
-    
-    // Quick navigation between grid and list view
-    if (event.ctrlKey) {
-        switch(event.key) {
-            case 'g':
-                document.querySelector('.view-grid').click();
-                break;
-            case 'l':
-                document.querySelector('.view-list').click();
-                break;
-        }
-    }
-});
-
-// Performance monitoring and analytics (optional)
+// Performance monitoring with enhanced metrics
 window.addEventListener('load', function() {
     if (window.performance) {
         const timing = window.performance.timing;
         const loadTime = timing.loadEventEnd - timing.navigationStart;
+        const domReady = timing.domContentLoadedEventEnd - timing.navigationStart;
+        const firstPaint = performance.getEntriesByType('paint')[0]?.startTime || 0;
         
-        // Send performance data to analytics service
+        // Send enhanced performance data
         sendPerformanceMetrics({
             loadTime: loadTime,
-            pageType: 'book-library'
+            domReady: domReady,
+            firstPaint: firstPaint,
+            pageType: 'book-library',
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
         });
     }
 });
 
 function sendPerformanceMetrics(metrics) {
-    // Implement your analytics tracking here
-    // Example with fetch API
+    // Enhanced analytics tracking
     fetch('/api/performance-metrics', {
         method: 'POST',
         headers: {
@@ -1033,17 +1158,26 @@ function sendPerformanceMetrics(metrics) {
 
 // Initialize all interactive components on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Reinitialize any components that might need refresh
+    // Reinitialize components with enhanced settings
     $('.select2-multiple').select2({
         placeholder: "Filter by category",
-        allowClear: true
+        allowClear: true,
+        theme: "modern"
     });
     
-    // Rebind tilt effects
-    $('.floating-book, .book-card, .book-list-item').tilt({
+    // Rebind tilt effects with improved parameters
+    $('.floating-book').tilt({
+        glare: true,
+        maxGlare: 0.3,
+        scale: 1.05,
+        perspective: 1000
+    });
+    
+    $('.book-card, .book-list-item').tilt({
         glare: true,
         maxGlare: 0.2,
-        scale: 1.02
+        scale: 1.02,
+        perspective: 1500
     });
 });
 </script>

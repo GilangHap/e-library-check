@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PeminjamanController;
 
 // Home Routes
 Route::get('/', [HomeController::class, 'index'])->name('beranda'); 
@@ -12,6 +13,19 @@ Route::get('/home', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
+Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+
+// Route untuk aksi perpanjang peminjaman
+Route::post('/peminjaman/perpanjang/{id}', [PeminjamanController::class, 'perpanjang'])->name('peminjaman.perpanjang');
+
+// Route untuk aksi batalkan antrian
+Route::delete('/peminjaman/batalkan/{id}', [PeminjamanController::class, 'batalkan'])->name('peminjaman.batalkan');
+
+// Route untuk aksi pinjam buku lagi
+Route::get('/peminjaman/pinjam-lagi/{id}', [PeminjamanController::class, 'pinjamLagi'])->name('peminjaman.pinjam-lagi');
+
+// Route untuk menyimpan ulasan
+Route::post('/ulasan/store')->name('ulasan.store');
 // User Profile Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {
@@ -37,13 +51,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 
-// Peminjaman Routes
-Route::prefix('peminjaman')->middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('peminjaman.index');
-    })->name('peminjaman.index');
-    // Add more routes for peminjaman if needed
-});
+
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
